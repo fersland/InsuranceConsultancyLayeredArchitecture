@@ -1,0 +1,48 @@
+﻿@model CSG_ADMINPRO.DOMAIN.Entities.Seguro
+
+@{
+    ViewData["Title"] = "Seguros / Ver Información";
+}
+
+<div class="container py-4">
+    <div class="d-flex justify-content-between">
+        <h4><i class="bi bi-star-fill"></i> @ViewData["Title"]?.ToString()</h4>
+
+        <a asp-action="Index" class="btn btn-info"> <i class="fas fa-reload"></i> Regresar</a>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="card border-0 shadow-lg">
+                <div class="card-body">
+                    <dl>
+                        <dt class="col-sm-4">
+                            @Html.DisplayNameFor(model => model.Codigo)
+                        </dt>
+                        <dd class="col-sm-8">
+                            @Html.DisplayFor(model => model.Codigo)
+                        </dd>
+                        <dt class="col-sm-4">
+                            @Html.DisplayNameFor(model => model.NombreSeguro)
+                        </dt>
+                        <dd class="col-sm-8">
+                            @Html.DisplayFor(model => model.NombreSeguro)
+                        </dd>
+                        <dt class="col-sm-4">
+                            @Html.DisplayNameFor(model => model.Asegurada)
+                        </dt>
+                        <dd class="col-sm-8">
+                            @Html.DisplayFor(model => model.Asegurada)
+                        </dd>
+                        <dt class="col-sm-4">
+                            @Html.DisplayNameFor(model => model.Prima)
+                        </dt>
+                        <dd class="col-sm-8">
+                            @Html.DisplayFor(model => model.Prima)
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

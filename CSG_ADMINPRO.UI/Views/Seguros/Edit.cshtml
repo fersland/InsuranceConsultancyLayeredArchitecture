@@ -1,0 +1,63 @@
+﻿@model CSG_ADMINPRO.DOMAIN.Entities.Seguro
+
+@{
+    ViewData["Title"] = "Seguros / Editar";
+    var errorMessage = TempData["errorMessage"]?.ToString();
+}
+
+<div class="container py-4">
+    <div class="d-flex justify-content-between">
+        <h4><i class="bi bi-star-fill"></i> @ViewData["Title"]?.ToString()</h4>
+        <a asp-action="Index" class="btn btn-info"> <i class="bi bi-arrow-return-left"></i> Regresar</a>
+    </div>
+
+    <div class="row mt-4">
+        @if (!string.IsNullOrWhiteSpace(errorMessage))
+        {
+            <div class="alert alert-danger">
+                <b><i class="bi bi-exclamation-triangle-fill"></i> </b> @errorMessage
+                <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+        <div class="col-md-6">
+            <div class="card border-0 shadow-lg">
+                <div class="card-body">
+                    <form asp-action="Edit">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input asp-for="Id" type="hidden" class="form-control" />
+                        <div class="form-group">
+                            <label asp-for="Codigo" class="control-label"></label>
+                            <input asp-for="Codigo" class="form-control" />
+                            <span asp-validation-for="Codigo" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="NombreSeguro" class="control-label"></label>
+                            <input asp-for="NombreSeguro" class="form-control" />
+                            <span asp-validation-for="NombreSeguro" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Asegurada" class="control-label"></label>
+                            <input asp-for="Asegurada" class="form-control" />
+                            <span asp-validation-for="Asegurada" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Prima" class="control-label"></label>
+                            <input asp-for="Prima" class="form-control" />
+                            <span asp-validation-for="Prima" class="text-danger"></span>
+                        </div>
+                        <div class="form-group mt-3">
+                            <button type="submit" class="btn btn-warning"><i class="fas fa-edit"></i> Editar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

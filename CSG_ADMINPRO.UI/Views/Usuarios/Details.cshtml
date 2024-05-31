@@ -1,0 +1,43 @@
+﻿@model CSG_ADMINPRO.UI.Models.ViewModel.UsuarioViewModel
+
+@{
+    ViewData["Title"] = "Usuarios / Ver Información";
+}
+
+<div class="container py-4">
+    <div class="d-flex justify-content-between">
+        <h4><i class="bi bi-star-fill"></i> @ViewData["Title"]?.ToString()</h4>
+
+        <a asp-action="Index" class="btn btn-info"> <i class="fas fa-reload"></i> Regresar</a>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="card border-0 shadow-lg">
+                <div class="card-body">
+                    <dl>
+                        <dt class="col-sm-4">
+                            @Html.DisplayNameFor(model => model.NombreUsuario)
+                        </dt>
+                        <dd class="col-sm-8">
+                            @Html.DisplayFor(model => model.NombreUsuario)
+                        </dd>
+                        <dt class="col-sm-4">
+                            @Html.DisplayNameFor(model => model.CorreoUsuario)
+                        </dt>
+                        <dd class="col-sm-8">
+                            @Html.DisplayFor(model => model.CorreoUsuario)
+                        </dd>
+                        <dt class="col-sm-4">
+                            @Html.DisplayNameFor(model => model.FechaCreacion)
+                        </dt>
+                        <dd class="col-sm-8">
+                            @Html.DisplayFor(model => model.FechaCreacion)
+                        </dd>
+
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

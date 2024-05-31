@@ -25,5 +25,13 @@ namespace CSG_ADMINPRO.DATA.Configuration
         public string DeleteAsegurada { get; set; }
         public string GetByIdAsegurada { get; set; }
         public string GetAllAsegurada { get; set; }
+
+        public string GetAllUsuario { get; set; }
+        public string GetByIdUsuario { get; set; }
+        public string AddUsuario { get; set; }
+        public string EditUsuario { get; set; }
+        public string DeleteUsuario { get; set; }
+
+        public string GetAllEstado { get; set; }
     }
 }

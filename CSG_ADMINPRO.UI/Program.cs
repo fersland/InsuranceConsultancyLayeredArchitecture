@@ -19,15 +19,20 @@ builder.Services.AddTransient<IDbConnection>(provider =>
 
 // Configurar la inyeccion de la lista de SP disponibles
 builder.Services.Configure<SP_Bitacora>(builder.Configuration.GetSection("StoredProcedures"));
+
 // Configurar la inyeccion a los servicios
 builder.Services.AddScoped<IClienteService, ClienteService>();
 builder.Services.AddScoped<ISeguroService, SeguroService>();
 builder.Services.AddScoped<IAseguradoService, AseguradoService>();
+builder.Services.AddScoped<IUsuarioService, UsuarioService>();
+builder.Services.AddScoped<IEstadoService, EstadoService>();
 
 // Configurar la inyeccion a los repositorios
 builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
 builder.Services.AddScoped<ISeguroRepository, SeguroRepository>();
 builder.Services.AddScoped<IAseguradoRepository, AseguradoRepository>();
+builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+builder.Services.AddScoped<IEstadoRepository, EstadoRepository>();
 
 builder.Services.AddAutoMapper(typeof(Program));
 

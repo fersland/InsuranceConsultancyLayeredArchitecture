@@ -126,8 +126,8 @@ namespace CSG_ADMINPRO.UI.Controllers
             var listViewModel = new UsuarioViewModel
             {
                 Id = datos.Id,
-                NombreUsuario = datos.NombreUsuario,  // Asigna "N/A" si NombreUsuario es null
-                CorreoUsuario = datos.CorreoUsuario,  // Asigna "N/A" si CorreoUsuario es null
+                NombreUsuario = datos.NombreUsuario ?? "N/A",
+                CorreoUsuario = datos.CorreoUsuario ?? "N/A",
                 FechaCreacion = datos.FechaCrecion
             };
 

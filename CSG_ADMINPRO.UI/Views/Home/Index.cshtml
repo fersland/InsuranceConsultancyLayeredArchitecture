@@ -1,8 +1,55 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
-
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+﻿<div class="hero">
+    <div class="container mt-4">
+        <h1>Bienvenido CSG - Tu Consultoría de Seguros</h1>
+        <p>Proveemos soluciones personalizadas para todas tus necesidades de seguros.</p>
+        <a href="#services" class="btn btn-primary">Descubre nuestros servicios</a>
+    </div>
 </div>
+<section id="about">
+    <h2 class="section-title text-center">Acerca de Nosotros</h2>
+    <div class="row mt-4 mb-4">
+        <div class="col-md-4">
+            <img src="~/images/seg.jpg" alt="About Us" class="img-fluid">
+        </div>
+        <div class="col-md-8">
+            <p>En nuestra consultoría de seguros, nos dedicamos a ofrecerte las mejores opciones para proteger lo que más valoras. Nuestro equipo de expertos está listo para asistirte en cada paso del proceso, desde la elección del seguro adecuado hasta la gestión de tus pólizas.</p>
+            <p>Nuestro compromiso es proporcionar un servicio de calidad, con una atención personalizada y soluciones adaptadas a tus necesidades específicas.</p>
+        </div>
+    </div>
+</section>
+<section id="services">
+    <h2 class="section-title text-center">Nuestros Servicios</h2>
+    <div class="row mt-4 mb-4">
+        <div class="col-md-4 feature">
+            <img src="~/images/seg2.png" alt="Service 1" class="img-fluid">
+            <h3 class="mt-2">Consultoría Personalizada</h3>
+            <p>Nuestros asesores te ayudarán a encontrar el seguro que mejor se adapte a tus necesidades y presupuesto.</p>
+        </div>
+        <div class="col-md-4 feature">
+            <img src="~/images/pol.jpg" alt="Service 2" class="img-fluid">
+            <h3 class="mt-2">Gestión de Pólizas</h3>
+            <p>Ofrecemos un servicio completo de gestión de pólizas para que no tengas que preocuparte por nada.</p>
+        </div>
+        <div class="col-md-4 feature">
+            <img src="~/images/att.jpg" alt="Service 3" class="img-fluid">
+            <h3 class="mt-2">Atención al Cliente</h3>
+            <p>Estamos disponibles para asistirte en cualquier momento con cualquier pregunta o inquietud que puedas tener.</p>
+        </div>
+    </div>
+</section>
+<section id="contact">
+    <h2 class="section-title text-center">Contacto</h2>
+    <div class="row mt-4 mb-4">
+        <div class="col-md-6">
+            <p>Si tienes alguna pregunta o necesitas más información, no dudes en ponerte en contacto con nosotros. Estamos aquí para ayudarte.</p>
+            <ul class="list-unstyled">
+                <li><i class="bi bi-telephone"></i> +1 234 567 890</li>
+                <li><i class="bi bi-envelope"></i> info@example.com</li>
+                <li><i class="bi bi-geo-alt"></i> 123 Main Street, City, Country</li>
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <img src="~/images/ccc.jpg" alt="Contact Us" class="img-fluid">
+        </div>
+    </div>
+</section>

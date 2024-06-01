@@ -21,7 +21,6 @@ public partial class Usuario
     [Required(ErrorMessage = "Este campo es obligatorio")]
     [Display(Name = "Clave de Usuario")]
     public string ClaveUsuario { get; set; } = null!;
-
     
     public DateTime FechaCrecion { get; set; }
 

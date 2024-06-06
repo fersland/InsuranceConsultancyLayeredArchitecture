@@ -13,7 +13,6 @@
   <ItemGroup>
     <ProjectReference Include="..\CSG_ADMINPRO.DATA\CSG_ADMINPRO.DATA.csproj" />
     <ProjectReference Include="..\CSG_ADMINPRO.DOMAIN\CSG_ADMINPRO.DOMAIN.csproj" />
-    <ProjectReference Include="..\CSG_AMINPRO.UI.ADMIN\CSG_AMINPRO.UI.ADMIN.csproj" />
   </ItemGroup>
 
 </Project>

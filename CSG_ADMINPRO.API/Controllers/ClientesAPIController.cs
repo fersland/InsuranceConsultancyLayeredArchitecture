@@ -17,7 +17,7 @@ namespace CSG_ADMINPRO.API.Controllers
 
         public ClientesAPIController(IClienteService clienteService,
                                         IMapper autoMapper,
-                                        ILogger<ClientesAPIController> logger)
+                                            ILogger<ClientesAPIController> logger)
         {
             _clienteService = clienteService;
             _autoMapper = autoMapper;
@@ -48,6 +48,8 @@ namespace CSG_ADMINPRO.API.Controllers
 
         [HttpGet]
         [Route("BuscarCLiente/{id:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetByIdCliente(int id)
         {
             try
@@ -90,6 +92,28 @@ namespace CSG_ADMINPRO.API.Controllers
             {
                 _logger.LogError(ex, "Error al crear un cliente.");
                 return StatusCode(500, "Error interno del servidor. " + ex.Message);
+            }
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Edit(int id, ClienteDTO dto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                var data = _autoMapper.Map<Cliente>(dto);
+
+                await _clienteService.UpdateClienteAsync(id, data);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al actualizar los datos.");
+                return StatusCode(500, "Error interno del servidor.");
             }
         }
 

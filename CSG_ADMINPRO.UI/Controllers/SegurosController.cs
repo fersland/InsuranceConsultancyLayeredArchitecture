@@ -39,7 +39,8 @@ namespace CSG_ADMINPRO.UI.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return Json(new { success = false, message = "Datos Invalidos" });
+                TempData["ErrorMessage"] = "Datos invalidos.";
+                return RedirectToAction("Index");
             }
 
             try
@@ -50,7 +51,7 @@ namespace CSG_ADMINPRO.UI.Controllers
             }
             catch (Exception ex)
             {
-                TempData["errorMessage"] = ex.Message;
+                TempData["ErrorMessage"] = ex.Message;
                 return RedirectToAction("Index");
             }
         }

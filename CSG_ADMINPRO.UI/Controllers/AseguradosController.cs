@@ -65,20 +65,21 @@ namespace CSG_ADMINPRO.UI.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return Json(new { success = false, message = "Datos invalidos." });
+                TempData["ErrorMessage"] = "Datos invalidos.";
+                return RedirectToAction("Index");
             }
 
             try
             {
                 var dataEntity = _autoMapper.Map<Asegurado>(dto);
                 await _serviceAsegurado.CreateAseguradoAsync(dataEntity);
-                TempData["successMessage"] = "Datos regiostrados correctamente.";
+                TempData["successMessage"] = "Datos registrados correctamente.";
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
-                TempData["errorMessage"] = ex.Message;
-                return View("Error");
+                TempData["ErrorMessage"] = ex.Message;
+                return RedirectToAction("Index");
             }
         }
 
@@ -88,7 +89,7 @@ namespace CSG_ADMINPRO.UI.Controllers
 
             if(asegurado == null)
             {
-                return Json(new { success = false, message = "Datos Invalidos" });
+                TempData["ErrorMessage"] = "Datos no encontrados";
             }
 
             var clientes = await _serviceCliente.GetAllClientesAsync();
@@ -105,7 +106,7 @@ namespace CSG_ADMINPRO.UI.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return Json(new { success = false, message = "Datos invalidos." });
+                TempData["ErrorMessage"] = "Datos invalidos";
             }
 
             try
@@ -117,7 +118,7 @@ namespace CSG_ADMINPRO.UI.Controllers
             }
             catch (Exception ex)
             {
-                TempData["errorMessage"] = ex.Message;
+                TempData["ErrorMessage"] = ex.Message;
                 return View("Error");
             }
         }
@@ -128,7 +129,7 @@ namespace CSG_ADMINPRO.UI.Controllers
             try
             {
                 await _serviceAsegurado.DeleteAseguradoAsync(id);
-                return Json(new { success = true, message = "Datos eliminados correctamente." });
+                return Json(new { success = true, message = "Datos eliminados correctamente si señor." });
             }
             catch (Exception ex)
             {

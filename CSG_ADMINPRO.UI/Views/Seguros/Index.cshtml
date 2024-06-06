@@ -51,23 +51,23 @@
     <script type="text/javascript">
         $(document).ready(function () {
             // Mostrar mensajes de éxito y error si existen
-        @if (TempData["SuccessMessage"] != null)
+        @if (TempData["successMessage"] != null)
         {
             <text>
                     Swal.fire({
                         icon: 'success',
                         title: 'Éxito',
-                        text: '@TempData["SuccessMessage"]'
+                        text: '@TempData["successMessage"]'
                     });
             </text>
         }
-        @if (TempData["ErrorMessage"] != null)
+        @if (TempData["errorMessage"] != null)
         {
             <text>
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
-                        text: '@TempData["ErrorMessage"]'
+                        text: '@TempData["errorMessage"]'
                     });
             </text>
         }

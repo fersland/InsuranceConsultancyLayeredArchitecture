@@ -55,7 +55,7 @@
     <script type="text/javascript">
         $(document).ready(function () {
             // Mostrar mensajes de éxito y error si existen
-        @if (TempData["SuccessMessage"] != null)
+        @if (TempData["successMessage"] != null)
         {
             <text>
                     Swal.fire({
@@ -65,7 +65,7 @@
                     });
             </text>
         }
-        @if (TempData["ErrorMessage"] != null)
+        @if (TempData["errorMessage"] != null)
         {
             <text>
                     Swal.fire({
@@ -75,7 +75,8 @@
                     });
             </text>
         }
-                                        });
+    });
+        
 
         function confirmDelete(id) {
             Swal.fire({

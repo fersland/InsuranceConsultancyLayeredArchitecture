@@ -71,7 +71,7 @@ namespace CSG_ADMINPRO.DATA.Repository.Implementation
             }
             catch (SqlException ex)
             {
-                throw new Exception("Ha ocurrido un error en la ejecucion del Store Procedure", ex);
+                throw new Exception("Ya existe este codigo o nombre de seguro", ex);
             }
             catch (Exception ex)
             {
@@ -93,7 +93,7 @@ namespace CSG_ADMINPRO.DATA.Repository.Implementation
             }
             catch (SqlException ex)
             {
-                throw new Exception("Ha ocurrido un error en la ejecucion del Store Procedure", ex);
+                throw new Exception("Ya existe este codigo o nombre de seguro", ex);
             }
             catch (Exception ex)
             {

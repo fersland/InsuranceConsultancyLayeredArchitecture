@@ -72,7 +72,7 @@ namespace CSG_ADMINPRO.DATA.Repository.Implementation
             }
             catch (SqlException ex)
             {
-                throw new Exception("Ha ocurrido un error al ejecutar el Store Procedure", ex);
+                throw new Exception("Error: El cliente ya esta asegurado.", ex);
             }
             catch (Exception ex)
             {
@@ -92,7 +92,7 @@ namespace CSG_ADMINPRO.DATA.Repository.Implementation
             }
             catch (SqlException ex)
             {
-                throw new Exception("Ha ocurrido un error al ejecutar el Store Procedure", ex);
+                throw new Exception("Error: El cliente ya tiene este seguro.", ex);
             }
             catch (Exception ex)
             {

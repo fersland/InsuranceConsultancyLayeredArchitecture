@@ -13,16 +13,19 @@ namespace CSG_ADMINPRO.UI.Controllers
         private readonly IClienteService _serviceCliente;
         private readonly ISeguroService _serviceSeguro;
         private readonly IMapper _autoMapper;
+        private readonly ILogger<AseguradosController> _logger;
 
         public AseguradosController(IAseguradoService service, 
                                         ISeguroService serviceSeguro,
                                             IClienteService clienteService,
-                                                IMapper mapper)
+                                                IMapper mapper,
+                                                ILogger<AseguradosController> logger)
         {
             _serviceAsegurado = service;
             _serviceSeguro = serviceSeguro;
             _serviceCliente = clienteService;
             _autoMapper = mapper;
+            _logger = logger;
         }
 
         public async Task<ActionResult> Index()
@@ -45,6 +48,7 @@ namespace CSG_ADMINPRO.UI.Controllers
             catch (Exception ex)
             {
                 TempData["errorMessage"] = ex.Message;
+                _logger.LogError(ex, " Error al listar los asegurados.");
                 return View("Error");
             }
         }
@@ -66,6 +70,7 @@ namespace CSG_ADMINPRO.UI.Controllers
             if (!ModelState.IsValid)
             {
                 TempData["ErrorMessage"] = "Datos invalidos.";
+                _logger.LogWarning("Intento de creacion de asegurados con datos invalidos");
                 return RedirectToAction("Index");
             }
 
@@ -74,11 +79,13 @@ namespace CSG_ADMINPRO.UI.Controllers
                 var dataEntity = _autoMapper.Map<Asegurado>(dto);
                 await _serviceAsegurado.CreateAseguradoAsync(dataEntity);
                 TempData["successMessage"] = "Datos registrados correctamente.";
+                _logger.LogInformation("Asegurado creado correctamente con codigo de seguro: {codigo} ", dataEntity.SeguroId);
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
                 TempData["ErrorMessage"] = ex.Message;
+                _logger.LogError(ex, " Error al crear al asegurado con Codigo: {codigo}", dto.SeguroId);
                 return RedirectToAction("Index");
             }
         }
@@ -90,6 +97,7 @@ namespace CSG_ADMINPRO.UI.Controllers
             if(asegurado == null)
             {
                 TempData["ErrorMessage"] = "Datos no encontrados";
+                _logger.LogWarning("Error al querer listar con datos inexistentes.");
             }
 
             var clientes = await _serviceCliente.GetAllClientesAsync();
@@ -107,6 +115,7 @@ namespace CSG_ADMINPRO.UI.Controllers
             if (!ModelState.IsValid)
             {
                 TempData["ErrorMessage"] = "Datos invalidos";
+                _logger.LogWarning("Error al actualizar con datos invalidos.");
             }
 
             try
@@ -114,6 +123,7 @@ namespace CSG_ADMINPRO.UI.Controllers
                 var dataEntity = _autoMapper.Map<Asegurado>(dto);
                 await _serviceAsegurado.UpdateAseguradoAsync(id, dataEntity);
                 TempData["successMessage"] = "Datos actualizados correctamente.";
+                _logger.LogInformation("Asegurado actualizado correctamente con codigo de seguro: {codigo} ", dataEntity.SeguroId);
                 return RedirectToAction("Index");
             }
             catch (Exception ex)

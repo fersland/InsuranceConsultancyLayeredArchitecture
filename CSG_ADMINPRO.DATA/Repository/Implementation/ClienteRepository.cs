@@ -73,7 +73,7 @@ namespace CSG_ADMINPRO.DATA.Repository.Implementation
             }
             catch (SqlException ex)
             {
-                throw new Exception("Ha ocurrido un error en la ejecucion del Store Procedure", ex);
+                throw new Exception("La cedula ya existe en la base de datos.", ex);
             }
             catch (Exception ex)
             {
@@ -95,7 +95,7 @@ namespace CSG_ADMINPRO.DATA.Repository.Implementation
             }
             catch (SqlException ex)
             {
-                throw new Exception("Ha ocurrido un error en la ejecucion del Store Procedure", ex);
+                throw new Exception("Error: verifique los datos, puede que la cedula ya exista.", ex);
             }
             catch (Exception ex)
             {

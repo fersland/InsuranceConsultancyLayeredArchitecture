@@ -8,10 +8,12 @@ namespace CSG_ADMINPRO.UI.Controllers
     public class SegurosController : Controller
     {
         private readonly ISeguroService _services;
+        private readonly ILogger<SegurosController> _logger;
 
-        public SegurosController(ISeguroService seguroService)
+        public SegurosController(ISeguroService seguroService, ILogger<SegurosController> logger)
         {
-            _services = seguroService;    
+            _services = seguroService;
+            _logger = logger;
         }
 
         public async Task<IActionResult> Index()
@@ -40,7 +42,30 @@ namespace CSG_ADMINPRO.UI.Controllers
             if (!ModelState.IsValid)
             {
                 TempData["ErrorMessage"] = "Datos invalidos.";
-                return RedirectToAction("Index");
+                return View(seguro);
+            }
+
+            if(seguro.Codigo.Contains("<script>") || seguro.Codigo.Contains("<") || seguro.Codigo.Contains(">"))
+            {
+                ModelState.AddModelError(string.Empty, "Lo ingresado contiene caracteres no permitidos.");
+                return View(seguro);
+            }
+            if (seguro.NombreSeguro.Contains("<script>") || seguro.NombreSeguro.Contains("<") || seguro.NombreSeguro.Contains(">"))
+            {
+                ModelState.AddModelError(string.Empty, "Lo ingresado contiene caracteres no permitidos.");
+                return View(seguro);
+            }
+
+            if (seguro.Asegurada.Contains("<script>") || seguro.Asegurada.Contains("<") || seguro.Asegurada.Contains(">"))
+            {
+                ModelState.AddModelError(string.Empty, "Lo ingresado contiene caracteres no permitidos.");
+                return View(seguro);
+            }
+
+            if (seguro.Prima.Contains("<script>") || seguro.Prima.Contains("<") || seguro.Prima.Contains(">"))
+            {
+                ModelState.AddModelError(string.Empty, "Lo ingresado contiene caracteres no permitidos.");
+                return View(seguro);
             }
 
             try
@@ -98,7 +123,7 @@ namespace CSG_ADMINPRO.UI.Controllers
             try
             {
                 await _services.DeleteSeguroAsync(id);
-                return Json(new { success = true, message = "Datos elimiandos correctamente" });
+                return Json(new { success = true, message = "Datos eliminados correctamente" });
             }
             catch (Exception ex)
             {

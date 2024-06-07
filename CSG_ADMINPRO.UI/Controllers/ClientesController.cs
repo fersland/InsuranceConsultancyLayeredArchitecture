@@ -72,18 +72,37 @@ namespace CSG_ADMINPRO.UI.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return Json(new { success = false, message = "Datos invalidos" });
+                TempData["ErrorMessage"] = "Datos invalidos.";
+                return View(cliente);
+            }
+
+            if(cliente.Cedula.Contains("<script>") || cliente.Cedula.Contains("<") || cliente.Cedula.Contains(">"))
+            {
+                ModelState.AddModelError(string.Empty, "Lo ingresado parece tener caracteres no permitidos.");
+                return View(cliente);
+            }
+
+            if (cliente.NombreCliente.Contains("<script>") || cliente.NombreCliente.Contains("<") || cliente.NombreCliente.Contains(">"))
+            {
+                ModelState.AddModelError(string.Empty, "Lo ingresado parece tener caracteres no permitidos.");
+                return View(cliente);
+            }
+
+            if (cliente.Telefono.Contains("<script>") || cliente.Telefono.Contains("<") || cliente.Telefono.Contains(">"))
+            {
+                ModelState.AddModelError(string.Empty, "Lo ingresado parece tener caracteres no permitidos.");
+                return View(cliente);
             }
 
             try
             {
                 await _service.UpdateClienteAsync(id, cliente);
-                TempData["successMessage"] = "Datos actualizados correctamente.";
+                TempData["SuccessMessage"] = "Datos actualizados correctamente.";
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
-                TempData["errorMessage"] = ex.Message;
+                TempData["ErrorMessage"] = ex.Message;
                 return RedirectToAction("Index");
             }
         }

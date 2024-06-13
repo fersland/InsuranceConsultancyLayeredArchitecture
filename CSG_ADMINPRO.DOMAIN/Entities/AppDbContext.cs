@@ -84,11 +84,6 @@ public partial class AppDbContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__Citas__EstadoId__4A8310C6");
 
-            entity.HasOne(d => d.Seguro).WithMany(p => p.Cita)
-                .HasForeignKey(d => d.SeguroId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Citas__SeguroId__498EEC8D");
-
             entity.HasOne(d => d.Usuario).WithMany(p => p.Cita)
                 .HasForeignKey(d => d.UsuarioId)
                 .OnDelete(DeleteBehavior.ClientSetNull)

@@ -25,9 +25,11 @@ builder.Services.AddTransient<IDbConnection>(provider =>
 
 // INYECTANDO SERVICIOS
 builder.Services.AddScoped<IClienteService, ClienteService>();
+builder.Services.AddScoped<ICitaService, CitaService>();
 
 // INYECTANDO REPOSITORIOS
 builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
+builder.Services.AddScoped<ICitaRepository, CitaRepository>();
 builder.Services.AddAutoMapper(typeof(Program));
 
 // Configuración de los proveedores de registro

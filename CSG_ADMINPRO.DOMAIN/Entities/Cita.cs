@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace CSG_ADMINPRO.DOMAIN.Entities;
 
@@ -12,12 +13,18 @@ public partial class Cita
     public int UsuarioId { get; set; }
 
     public int AseguradoId { get; set; }
-
-    public int SeguroId { get; set; }
-
-    public DateOnly Fecha { get; set; }
-
-    public TimeOnly Hora { get; set; }
+    public DateTime Fecha { get; set; }
+    //[JsonIgnore]
+    //public DateOnly Fecha { get; set; }
+    //[JsonIgnore]
+    //public TimeOnly Hora { get; set; }
+    //// Propiedades auxiliares para la serialización
+    //[JsonPropertyName("fecha")]
+    //public string FechaString
+    //{
+    //    get => Fecha.ToString("yyyy-MM-dd");
+    //    set => Fecha = DateOnly.Parse(value);
+    //}
 
     public DateTime FechaCreacion { get; set; }
 

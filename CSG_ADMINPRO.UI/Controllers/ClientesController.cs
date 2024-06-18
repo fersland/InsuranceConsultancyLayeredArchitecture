@@ -70,7 +70,7 @@ namespace CSG_ADMINPRO.UI.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(int id, Cliente cliente)
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid) 
             {
                 return Json(new { success = false, message = "Datos invalidos" });
             }

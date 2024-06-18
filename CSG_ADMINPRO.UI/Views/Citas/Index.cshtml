@@ -1,0 +1,130 @@
+﻿@model IEnumerable<CSG_ADMINPRO.DOMAIN.DTO.CitaDTO>
+
+@{
+    ViewData["Title"] = "Citas / Listado";
+}
+<div class="container py-4">
+    <div class="d-flex justify-content-between">
+        <h4><i class="bi bi-list"></i> @ViewData["Title"]?.ToString()</h4>
+        <a asp-action="Create" class="btn btn-success"> <i class="fas fa-check"></i> Nuevo</a>
+    </div>
+
+    <div class="row mt-3">
+        <div class="card border-0 shadow-lg">
+            <div class="card-body">
+                <table class="table table-striped table-hover display" id="example" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>@Html.DisplayNameFor(model => model.CitaId)</th>
+                            <th>@Html.DisplayNameFor(model => model.CedulaCliente)</th>
+                            <th>@Html.DisplayNameFor(model => model.NombreCliente)</th>
+                            <th>@Html.DisplayNameFor(model => model.FechaCita)</th>
+                            <th>@Html.DisplayNameFor(model => model.FechaCreacionCita)</th>
+                            <th>@Html.DisplayNameFor(model => model.Motivo)</th>
+                            <th>@Html.DisplayNameFor(model => model.Notas)</th>
+                            <th>@Html.DisplayNameFor(model => model.Ubicacion)</th>
+                            <th>@Html.DisplayNameFor(model => model.NombreEstado)</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@Html.DisplayFor(modelItem => item.CitaId)</td>
+                                <td>@Html.DisplayFor(modelItem => item.CedulaCliente)</td>
+                                <td>@Html.DisplayFor(modelItem => item.NombreCliente)</td>
+                                <td>@Html.DisplayFor(modelItem => item.FechaCita)</td>
+                                <td>@Html.DisplayFor(modelItem => item.FechaCreacionCita)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Motivo)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Notas)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Ubicacion)</td>
+                                <td>@Html.DisplayFor(modelItem => item.NombreEstado)</td>
+                                <td>
+                                   @Html.ActionLink("Edit", "Edit", new { id = item.CitaId})
+                                   <a href="#" onclick="confirmDelete(@item.CitaId)">Delete</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // Mostrar mensajes de éxito y error si existen
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <text>
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Éxito',
+                        text: '@TempData["SuccessMessage"]'
+                    });
+            </text>
+        }
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <text>
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: '@TempData["ErrorMessage"]'
+                    });
+            </text>
+        }
+                                        });
+
+        function confirmDelete(id) {
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: "¡No podrás revertir esto!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, eliminarlo!',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '@Url.Action("Delete", "Citas")',
+                        type: 'POST',
+                        data: { id: id },
+                        success: function (response) {
+                            // Mostrar una alerta de éxito usando SweetAlert
+                            if (response.success) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Eliminado!',
+                                    text: response.message
+                                }).then(() => {
+                                    location.reload(); // Recargar la página después de cerrar la alerta
+                                });
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error',
+                                    text: 'No puede eliminar un cliente asegurado, debe eliminarle el seguro para eliminar al cliente.'
+                                });
+                            }
+                        },
+                        error: function () {
+                            // Mostrar una alerta de error usando SweetAlert
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: response.message
+                            });
+                        }
+                    });
+                }
+            });
+        }
+    </script>
+}

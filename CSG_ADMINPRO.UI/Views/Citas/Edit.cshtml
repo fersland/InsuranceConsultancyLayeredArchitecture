@@ -1,0 +1,62 @@
+﻿@model CSG_ADMINPRO.DOMAIN.DTO.CitaCreateDTO
+
+@{
+    ViewData["title"] = "Citas / Editar";
+
+}
+
+<div class="container py-4">
+    <div class="d-flex justify-content-between">
+        <h4>@ViewData["title"]</h4>
+
+        <a asp-action="Index" class="btn btn-outline-info">Volver</a>
+    </div>
+
+    <div class="mt-4">
+        <div class="col-md-6">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="form-group">
+                    <label asp-for="ClienteId"></label>
+                    <select class="form-control" asp-for="ClienteId" asp-items="@(new SelectList(ViewBag.Clientes, "Id", "NombreCliente"))">
+                        <option>-- SELECCIONAR CLIENTE --</option>
+                    </select>
+                    <span asp-validation-for="ClienteId" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Fecha"></label>
+                    <input class="form-control" type="date" asp-for="Fecha" />
+                    <span asp-validation-for="Fecha" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Motivo"></label>
+                    <input class="form-control" type="text" asp-for="Motivo" />
+                    <span asp-validation-for="Motivo" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Notas"></label>
+                    <input class="form-control" type="text" asp-for="Notas" />
+                    <span asp-validation-for="Notas" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Ubicacion"></label>
+                    <input class="form-control" type="text" asp-for="Ubicacion" />
+                    <span asp-validation-for="Ubicacion" class="text-danger"></span>
+                </div>
+
+                <button class="btn btn-outline-warning" type="submit">Editar</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -9,13 +9,13 @@ namespace CSG_ADMINPRO.API.Controllers
 {
     [ApiController]
     [Route("api/[Controller]")]
-    public class CitasController : Controller
+    public class CitasAPIController : Controller
     {
         private readonly ICitaService _services;
-        private readonly ILogger<CitasController> _logger;
+        private readonly ILogger<CitasAPIController> _logger;
         private readonly IMapper _mapper;
-        public CitasController(ICitaService citaService, 
-                                    ILogger<CitasController> logger,
+        public CitasAPIController(ICitaService citaService, 
+                                    ILogger<CitasAPIController> logger,
                                         IMapper mapper)
         {
             _services = citaService;
@@ -44,18 +44,16 @@ namespace CSG_ADMINPRO.API.Controllers
                     CitaId = dto.CitaId,
                     CedulaCliente = dto.CedulaCliente,
                     NombreCliente = dto.NombreCliente,
-                    CodigoSeguro = dto.CodigoSeguro,
-                    NombreDelSeguro = dto.NombreDelSeguro,
                     FechaCita = dto.FechaCita,
                     FechaCreacionCita = dto.FechaCreacionCita,
                     Motivo = dto.Motivo,
                     Notas = dto.Notas,
                     Ubicacion = dto.Ubicacion,
-                    EstadoId = dto.EstadoId
+                    NombreEstado = dto.NombreEstado
                 });
 
                 _logger.LogInformation("Se mostraron la lista encontrada.");
-                Console.WriteLine($"La cita se genero para este asegurado");
+                Console.WriteLine($"La cita se genero correctamente.");
                 return Ok(listViewModel);
             }
             catch (Exception ex)
@@ -159,5 +157,7 @@ namespace CSG_ADMINPRO.API.Controllers
             _logger.LogInformation("Dato eliminado correctamente.");
             return Ok();
         }
+
+
     }
 }

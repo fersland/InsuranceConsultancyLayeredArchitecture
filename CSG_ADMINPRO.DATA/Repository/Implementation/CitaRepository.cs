@@ -67,8 +67,6 @@ namespace CSG_ADMINPRO.DATA.Repository.Implementation
             {
                 var parameters = new DynamicParameters();
                 parameters.Add("@ClienteId", cita.ClienteId, DbType.Int32);
-                parameters.Add("@UsuarioId", cita.UsuarioId, DbType.Int32);
-                parameters.Add("@AseguradoId", cita.AseguradoId, DbType.Int32);
                 parameters.Add("@Fecha", cita.Fecha, DbType.Date); // Fecha dia de cita
                 parameters.Add("@Motivo", cita.Motivo, DbType.String);
                 parameters.Add("@Notas", cita.Notas, DbType.String);
@@ -93,8 +91,6 @@ namespace CSG_ADMINPRO.DATA.Repository.Implementation
                 var parameters = new DynamicParameters();
                 parameters.Add("@CitaId", id, DbType.Int32);
                 parameters.Add("@ClienteId", cita.ClienteId, DbType.Int32);
-                parameters.Add("@UsuarioId", cita.UsuarioId, DbType.Int32);
-                parameters.Add("@AseguradoId", cita.AseguradoId, DbType.Int32);
                 parameters.Add("@Fecha", cita.Fecha, DbType.Date); // Fecha dia de cita
                 parameters.Add("@Motivo", cita.Motivo, DbType.String);
                 parameters.Add("@Notas", cita.Notas, DbType.String);

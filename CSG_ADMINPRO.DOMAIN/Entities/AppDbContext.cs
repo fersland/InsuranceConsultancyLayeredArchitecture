@@ -69,11 +69,6 @@ public partial class AppDbContext : DbContext
                 .HasMaxLength(255)
                 .IsUnicode(false);
 
-            entity.HasOne(d => d.Asegurado).WithMany(p => p.Cita)
-                .HasForeignKey(d => d.AseguradoId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Citas__Asegurado__489AC854");
-
             entity.HasOne(d => d.Cliente).WithMany(p => p.Cita)
                 .HasForeignKey(d => d.ClienteId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -84,10 +79,6 @@ public partial class AppDbContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__Citas__EstadoId__4A8310C6");
 
-            entity.HasOne(d => d.Usuario).WithMany(p => p.Cita)
-                .HasForeignKey(d => d.UsuarioId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Citas__UsuarioId__47A6A41B");
         });
 
         modelBuilder.Entity<Cliente>(entity =>

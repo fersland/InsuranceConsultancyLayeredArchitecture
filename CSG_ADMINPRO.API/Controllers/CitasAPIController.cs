@@ -115,7 +115,7 @@ namespace CSG_ADMINPRO.API.Controllers
             catch (Exception ex)
             {
                 _logger.LogWarning("Error: ocurrio un error al actualizar los datos.");
-                return StatusCode(StatusCodes.Status500InternalServerError, " Error interno del servidor." + ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, " Error interno del servidor: " + ex.Message);
             }
         }
 

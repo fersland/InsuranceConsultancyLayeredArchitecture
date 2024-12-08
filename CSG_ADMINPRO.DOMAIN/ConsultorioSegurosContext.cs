@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSG_ADMINPRO.DOMAIN.Entities;
+namespace CSG_ADMINPRO.DOMAIN;
 
-public partial class AppDbContext : DbContext
+public partial class ConsultorioSegurosContext : DbContext
 {
-    public AppDbContext()
+    public ConsultorioSegurosContext()
     {
     }
 
-    public AppDbContext(DbContextOptions<AppDbContext> options)
+    public ConsultorioSegurosContext(DbContextOptions<ConsultorioSegurosContext> options)
         : base(options)
     {
     }
@@ -39,7 +39,7 @@ public partial class AppDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=DESKTOP-KHL9FRV\\SQLEXPRESS;Initial Catalog=Consultorio_Seguros;User ID=DESKTOP-KHL9FRV\\fersl;Password=;Trusted_Connection=True;TrustServerCertificate=True;");
+        => optionsBuilder.UseSqlServer("Data Source=DESKTOP-KHL9FRV\\SQLEXPRESS;Initial Catalog=Consultorio_Seguros;User=DESKTOP-KHL9FRV\\fersl;Password=;Trusted_connection=True;TrustServerCertificate=True;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

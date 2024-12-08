@@ -18,15 +18,15 @@ namespace CSG_ADMINPRO.DOMAIN.DTO
         [Display(Name = "Cliente")]
         public string NombreCliente { get; set; }
         [Required(ErrorMessage = "Este campo es obligatorio")]
-        [Display(Name = "Fecha Cita")]
+        [Display(Name = "Fecha_Cita")]
         public DateTime FechaCita { get; set; }
-        [Display(Name = "Fecha Registro")]
+        [Display(Name = "Fecha_Registro")]
         public DateTime FechaCreacionCita { get; set; }
-        [Display(Name = "Fecha Actualización")]
+        [Display(Name = "Fecha_Actualización")]
         public DateTime? FechaActualizcion { get; set; }
         [Required(ErrorMessage = "Este campo es obligatorio")]
         [StringLength(120, ErrorMessage = "Solo se permiten entre 20 a 120 caracteres.", MinimumLength = 20)]
-        [Display(Name = "MOTIVO DE CITA")]
+        [Display(Name = "MOTIVO_CITA")]
         public string? Motivo { get; set; }
 
         [Required(ErrorMessage = "Este campo es obligatorio")]

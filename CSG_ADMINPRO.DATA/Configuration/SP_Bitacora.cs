@@ -38,7 +38,13 @@ namespace CSG_ADMINPRO.DATA.Configuration
         public string AddCita { get; set; }
         public string EditCita { get; set; }
         public string DeleteCita { get; set; }
-
         public string GetByIdCita { get; set; }
+
+        public string GetAllServicio { get; set; }
+        public string GetByIdServicio { get; set; }
+        public string AddServicio { get; set; }
+        public string EditServicio { get; set; }
+        public string DeleteServicio { get; set; }
+
     }
 }

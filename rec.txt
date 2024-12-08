@@ -1,0 +1,6 @@
+Crear la clase desde Sql server
+Actualizar el model en la app
+
+ Capa Aplicacion
+	=> Interface => IProductoService
+	=> Implementation => ProductoService

@@ -29,6 +29,7 @@ namespace CSG_ADMINPRO.APLICATION.Implementation
         {
             return await Task.Run(() => _repository.GetById(id));
         }
+
         public async Task CreateCitaAsync(CitaCreateDTO cita)
         {
             await Task.Run(() => _repository.Insert(cita));

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CSG_ADMINPRO.DOMAIN.Entities;
+namespace CSG_ADMINPRO.DOMAIN;
 
 public partial class Cliente
 {

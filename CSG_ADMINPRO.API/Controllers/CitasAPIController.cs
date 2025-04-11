@@ -132,7 +132,7 @@ namespace CSG_ADMINPRO.API.Controllers
             }
 
             var response = await _services.GetByIdAsync(id);
-
+            
             if(response == null)
             {
                 _logger.LogCritical("ID no encontrada.");

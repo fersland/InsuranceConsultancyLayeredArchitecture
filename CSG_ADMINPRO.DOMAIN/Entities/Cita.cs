@@ -9,7 +9,7 @@ public partial class Cita
 
     public int ClienteId { get; set; }
 
-    public DateOnly Fecha { get; set; }
+    public DateTime Fecha { get; set; }
 
     public DateTime FechaCreacion { get; set; }
 

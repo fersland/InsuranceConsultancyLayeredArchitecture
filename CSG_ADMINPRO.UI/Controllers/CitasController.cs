@@ -90,7 +90,8 @@ namespace CSG_ADMINPRO.UI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Edit(int id){
+        public async Task<IActionResult> Edit(int id)
+        {
             if(id <= 0)
             {
                 return Json(new { success = false, message = "La ID no es valida." });

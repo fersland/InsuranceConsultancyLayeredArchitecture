@@ -26,11 +26,16 @@ builder.Services.AddTransient<IDbConnection>(provider =>
 // INYECTANDO SERVICIOS
 builder.Services.AddScoped<IClienteService, ClienteService>();
 builder.Services.AddScoped<ICitaService, CitaService>();
+builder.Services.AddScoped<IServicioService, ServicioService>();
 
 // INYECTANDO REPOSITORIOS
 builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
 builder.Services.AddScoped<ICitaRepository, CitaRepository>();
+builder.Services.AddScoped<IServicioRepository, ServicioRepository>();
+
 builder.Services.AddAutoMapper(typeof(Program));
+
+// INYECTANDO 
 
 // Configuración de los proveedores de registro
 builder.Logging.ClearProviders(); // Limpiar proveedores existentes

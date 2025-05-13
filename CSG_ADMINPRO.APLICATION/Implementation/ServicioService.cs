@@ -12,7 +12,7 @@ namespace CSG_ADMINPRO.APLICATION.Implementation
     public class ServicioService : IServicioService
     {
 
-        private IServicioRepository _repository;
+        private readonly IServicioRepository _repository;
 
         public ServicioService(IServicioRepository repository)
         {

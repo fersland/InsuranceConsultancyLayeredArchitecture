@@ -1,5 +1,6 @@
 ﻿using CSG_ADMINPRO.DATA.Configuration;
 using CSG_ADMINPRO.DATA.Repository.Interfaces;
+using CSG_ADMINPRO.DOMAIN;
 using CSG_ADMINPRO.DOMAIN.Entities;
 using Dapper;
 using Microsoft.Data.SqlClient;
@@ -46,7 +47,20 @@ namespace CSG_ADMINPRO.DATA.Repository.Implementation
 
         public Servicio GetById(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var param = new DynamicParameters();
+                param.Add("@Id", id, DbType.Int32);
+                return _connection.QueryFirst<DOMAIN.Entities.Servicio>(_bitacora.GetByIdServicio, param, commandType: CommandType.StoredProcedure);
+            }
+            catch(SqlException ex)
+            {
+                throw new Exception("Ha ocurrido un erorr al ejecutar el Store Procedure.", ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Ha ocurrido un error", ex);
+            }
         }
 
         public void Insert(Servicio servicio)

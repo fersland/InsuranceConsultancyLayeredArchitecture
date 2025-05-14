@@ -77,6 +77,8 @@ namespace CSG_ADMINPRO.API.Controllers
                 return StatusCode(500, "Error interno del servidor." + ex.Message);
             }
         }
+
+
     }
 
 

@@ -1,6 +1,32 @@
 Crear la clase desde Sql server
 Actualizar el model en la app
 
- Capa Aplicacion
+Capa API
+	=> Controllers
+	-> appSettings.json
+	-> Mapping,cs
+	-> Program.cs
+
+Capa Aplicacion
 	=> Interface => IProductoService
 	=> Implementation => ProductoService
+	=> ViewModel
+
+Capa Data
+	=> Config
+		-> Bitacora
+	=> Repository
+		-> Implementacion -> ProductoRepository
+		-> Interfaces -> IProductoRepository
+
+Capa Dominio
+	=> DTO
+	=> Entities
+
+Capa UI
+	=> Controllers
+	=> Models
+	=> Mapping
+	=> Views
+		-> AppSettings.json
+		-> Program.cs

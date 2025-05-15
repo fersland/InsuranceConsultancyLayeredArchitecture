@@ -1,6 +1,5 @@
 ﻿using CSG_ADMINPRO.DATA.Configuration;
 using CSG_ADMINPRO.DATA.Repository.Interfaces;
-using CSG_ADMINPRO.DOMAIN;
 using CSG_ADMINPRO.DOMAIN.Entities;
 using Dapper;
 using Microsoft.Data.SqlClient;
@@ -59,7 +58,7 @@ namespace CSG_ADMINPRO.DATA.Repository.Implementation
             }
             catch (Exception ex)
             {
-                throw new Exception("Ha ocurrido un error", ex);
+                throw new Exception(" Ha ocurrido un error", ex);
             }
         }
 

@@ -1,0 +1,12 @@
+USE Consultorio_Seguros
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[sp_GetById_Servicio]
+@Id int
+AS 
+BEGIN
+    SELECT * FROM Servicios WHERE Id = @Id
+END
+GO

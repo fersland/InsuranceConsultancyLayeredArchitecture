@@ -1,47 +1,35 @@
-using CSG_ADMINPRO.DATA.Configuration;
-using CSG_ADMINPRO.DATA.Repository.Implementation;
-using CSG_ADMINPRO.DATA.Repository.Interfaces;
 using CSG_ADMINPRO.APLICATION.Implementation;
 using CSG_ADMINPRO.APLICATION.Interfaces;
-using Microsoft.Data.SqlClient;
-using System.Data;
-using System.Data.SqlTypes;
+using CSG_ADMINPRO.DATA.Repository.Implementation;
+using CSG_ADMINPRO.DATA.Repository.Interfaces;
+using CSG_ADMINPRO.UI.Services.API;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddControllersWithViews();
-builder.Services.AddTransient<IDbConnection>(provider =>
+// Configurar lectura de appsettings.json
+var configuration = builder.Configuration;
+
+// Inyectar HttpClient con la URL base de la API desde configuración
+builder.Services.AddHttpClient("ApiClient", client =>
 {
-    var connectionString = builder.Configuration.GetConnectionString("db");
-    return new SqlConnection(connectionString);
+    client.BaseAddress = new Uri(configuration["ApiSettings:BaseUrl"]);
 });
 
-builder.Services.AddHttpClient();
 
-// Configurar la inyeccion de la lista de SP disponibles
-builder.Services.Configure<SP_Bitacora>(builder.Configuration.GetSection("StoredProcedures"));
+// Nuevo servicio que llama a la API
+builder.Services.AddScoped<IClienteApiService, ClienteApiService>();
 
-// Configurar la inyeccion a los servicios
-builder.Services.AddScoped<IClienteService, ClienteService>();
-builder.Services.AddScoped<ISeguroService, SeguroService>();
-builder.Services.AddScoped<IAseguradoService, AseguradoService>();
-builder.Services.AddScoped<IUsuarioService, UsuarioService>();
-builder.Services.AddScoped<IEstadoService, EstadoService>();
-builder.Services.AddScoped<ICitaService, CitaService>();
+// Agregar controladores y vistas (MVC)
+builder.Services.AddControllersWithViews();
 
-// Configurar la inyeccion a los repositorios
-builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
-builder.Services.AddScoped<ISeguroRepository, SeguroRepository>();
-builder.Services.AddScoped<IAseguradoRepository, AseguradoRepository>();
-builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
-builder.Services.AddScoped<IEstadoRepository, EstadoRepository>();
-builder.Services.AddScoped<ICitaRepository, CitaRepository>();
 builder.Services.AddAutoMapper(typeof(Program));
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configurar pipeline de ejecución
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -50,6 +38,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
 app.UseRouting();
 app.UseAuthorization();
 

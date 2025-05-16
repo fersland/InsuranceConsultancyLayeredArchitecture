@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using CSG_ADMINPRO.DOMAIN.Entities;
+using CSG_ADMINPRO.DOMAIN.Entities.CSG_ADMINPRO.DOMAIN.Entities.CSG_ADMINPRO.DOMAIN.Entities;
 
-namespace CSG_ADMINPRO.DOMAIN.Entities;
+namespace CSG_ADMINPRO.DATA;
 
 public partial class AppDbContext : DbContext
 {
@@ -37,9 +39,11 @@ public partial class AppDbContext : DbContext
 
     public virtual DbSet<Usuario> Usuarios { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=DESKTOP-KHL9FRV\\SQLEXPRESS;Initial Catalog=Consultorio_Seguros;User ID=DESKTOP-KHL9FRV\\fersl;Password=;Trusted_Connection=True;TrustServerCertificate=True;");
+    public virtual DbSet<Reclamacion> Reclamaciones { get; set; }
+
+    public virtual DbSet<Poliza> Polizas { get; set; }
+
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -134,7 +138,8 @@ public partial class AppDbContext : DbContext
 
         modelBuilder.Entity<Servicio>(entity =>
         {
-            entity.HasNoKey();
+            entity.HasKey(s => s.Id);
+            entity.Property(s => s.Id).ValueGeneratedOnAdd();
 
             entity.Property(e => e.NombreServicio)
                 .HasMaxLength(100)
@@ -241,6 +246,79 @@ public partial class AppDbContext : DbContext
                 .HasForeignKey(d => d.EstadoId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__Usuarios__Estado__2B0A656D");
+        });
+
+        modelBuilder.Entity<Poliza>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+
+            entity.Property(e => e.NumeroPoliza)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+
+            entity.Property(e => e.Estado)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+
+            entity.Property(e => e.MontoAsegurado)
+                .HasColumnType("decimal(18, 2)");
+
+            entity.Property(e => e.Prima)
+                .HasColumnType("decimal(18, 2)");
+
+            entity.Property(e => e.FechaEmision)
+                .HasColumnType("datetime");
+
+            entity.Property(e => e.FechaVencimiento)
+                .HasColumnType("datetime");
+
+            entity.Property(e => e.FechaCreacion)
+                .HasColumnType("datetime");
+
+            entity.Property(e => e.FechaModificacion)
+                .HasColumnType("datetime");
+
+            entity.Property(e => e.Notas)
+                .HasColumnType("text");
+
+            entity.HasOne(p => p.Cliente)
+                .WithMany(c => c.Polizas)
+                .HasForeignKey(p => p.ClienteId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
+
+            entity.HasOne(p => p.Seguro)
+                .WithMany()
+                .HasForeignKey(p => p.SeguroId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
+        });
+
+
+        modelBuilder.Entity<Reclamacion>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+
+            entity.Property(e => e.Descripcion).HasColumnType("text");
+            entity.Property(e => e.Resolucion).HasColumnType("text");
+
+            entity.Property(e => e.Estado)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+
+            entity.Property(e => e.MontoReclamado)
+                .HasColumnType("decimal(18, 2)");
+
+            entity.Property(e => e.FechaReclamacion).HasColumnType("datetime");
+            entity.Property(e => e.FechaResolucion).HasColumnType("datetime");
+
+            entity.HasOne(r => r.Poliza)
+                .WithMany(p => p.Reclamaciones)
+                .HasForeignKey(r => r.PolizaId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
+
+            entity.HasOne(r => r.Cliente)
+                .WithMany()
+                .HasForeignKey(r => r.ClienteId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
         });
 
         OnModelCreatingPartial(modelBuilder);

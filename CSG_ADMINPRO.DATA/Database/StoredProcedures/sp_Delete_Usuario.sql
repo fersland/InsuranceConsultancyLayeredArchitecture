@@ -1,0 +1,12 @@
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [dbo].[sp_Delete_Usuario]
+@Id int
+AS
+		BEGIN
+			DELETE Usuarios
+			WHERE Id=@Id
+		END
+GO

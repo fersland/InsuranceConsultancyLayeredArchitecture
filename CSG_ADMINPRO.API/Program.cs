@@ -6,6 +6,8 @@ using CSG_ADMINPRO.DATA.Repository.Interfaces;
 using Microsoft.Data.SqlClient;
 using CSG_ADMINPRO.APLICATION;
 using System.Data;
+using CSG_ADMINPRO.DATA;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +24,10 @@ builder.Services.AddTransient<IDbConnection>(provider =>
     var connectionString = builder.Configuration.GetConnectionString("db");
     return new SqlConnection(connectionString);
 });
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("db")));
+
 
 // INYECTANDO SERVICIOS
 builder.Services.AddScoped<IClienteService, ClienteService>();

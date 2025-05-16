@@ -25,6 +25,7 @@ namespace CSG_ADMINPRO.API.Controllers
         }
 
         [HttpGet]
+        [Route("/list")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetAllCliente()

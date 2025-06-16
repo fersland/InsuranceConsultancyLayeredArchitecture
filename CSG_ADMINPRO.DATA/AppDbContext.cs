@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using CSG_ADMINPRO.DOMAIN.Entities;
-using CSG_ADMINPRO.DOMAIN.Entities.CSG_ADMINPRO.DOMAIN.Entities.CSG_ADMINPRO.DOMAIN.Entities;
 
 namespace CSG_ADMINPRO.DATA;
 

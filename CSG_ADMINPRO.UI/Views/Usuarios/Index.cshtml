@@ -49,29 +49,6 @@
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script type="text/javascript">
-        $(document).ready(function () {
-            // Mostrar mensajes de éxito y error si existen
-        @if (TempData["SuccessMessage"] != null)
-        {
-            <text>
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Éxito',
-                        text: '@TempData["SuccessMessage"]'
-                    });
-            </text>
-        }
-        @if (TempData["ErrorMessage"] != null)
-        {
-            <text>
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: '@TempData["ErrorMessage"]'
-                    });
-            </text>
-        }
-                                        });
 
         function confirmDelete(id) {
             Swal.fire({

@@ -1,4 +1,4 @@
-﻿using CSG_ADMINPRO.DOMAIN.Entities.CSG_ADMINPRO.DOMAIN.Entities.CSG_ADMINPRO.DOMAIN.Entities;
+﻿using CSG_ADMINPRO.DOMAIN.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +14,7 @@ namespace CSG_ADMINPRO.DOMAIN.Entities
         // Relaciones
         public int PolizaId { get; set; }
         public Poliza Poliza { get; set; }
-
+        
         public int ClienteId { get; set; }
         public Cliente Cliente { get; set; }
 

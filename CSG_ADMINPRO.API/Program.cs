@@ -11,6 +11,16 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("MiPoliticaCors", policy =>
+    {
+        policy.WithOrigins("https://localhost:7074") // Puerto de tu app MVC
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -56,6 +66,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors("MiPoliticaCors");
 app.UseAuthorization();
 app.MapControllers();
 app.Run();

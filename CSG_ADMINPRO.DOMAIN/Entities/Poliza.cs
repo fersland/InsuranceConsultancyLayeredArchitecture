@@ -6,25 +6,16 @@ using System.Threading.Tasks;
 
 namespace CSG_ADMINPRO.DOMAIN.Entities
 {
-    using System;
-
-    namespace CSG_ADMINPRO.DOMAIN.Entities
+    public class Poliza
     {
-        using System;
-        using System.Collections.Generic;
-
-        namespace CSG_ADMINPRO.DOMAIN.Entities
-        {
-            public class Poliza
-            {
                 public int Id { get; set; }
 
                 // Relaciones
                 public int ClienteId { get; set; }
-                public Cliente Cliente { get; set; }
+                public virtual Cliente Cliente { get; set; } = null!;
 
                 public int SeguroId { get; set; }
-                public Seguro Seguro { get; set; }
+                public virtual Seguro Seguro { get; set; } = null!;
 
                 // Detalles de la póliza
                 public string NumeroPoliza { get; set; } = string.Empty; // Código o número asignado
@@ -48,7 +39,3 @@ namespace CSG_ADMINPRO.DOMAIN.Entities
 
             }
         }
-
-    }
-
-}

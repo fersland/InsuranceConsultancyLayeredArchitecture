@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CSG_ADMINPRO.API.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/cliente")]
     public class ClientesAPIController : Controller
     {
         private readonly IClienteService _clienteService;
@@ -48,7 +48,9 @@ namespace CSG_ADMINPRO.API.Controllers
         }
 
         [HttpGet]
-        [Route("BuscarCLiente/{id:int}")]
+        [Route("/search/{id:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetByIdCliente(int id)
         {
             try
@@ -73,8 +75,39 @@ namespace CSG_ADMINPRO.API.Controllers
             }
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Create(ClienteDTO dto)
+        [HttpPost("create")]
+        public async Task<IActionResult> Create([FromBody] ClienteDTO dto)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    var errors = ModelState
+                        .Where(x => x.Value.Errors.Count > 0)
+                        .ToDictionary(
+                            kvp => kvp.Key,
+                            kvp => kvp.Value.Errors.Select(e => e.ErrorMessage).ToArray()
+                        );
+
+                    return BadRequest(new { success = false, errors });
+                }
+
+                var entity = _autoMapper.Map<Cliente>(dto);
+                await _clienteService.CreateClienteAsync(entity);
+
+                return Ok(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al crear cliente.");
+                return StatusCode(500, new { success = false, message = ex.Message });
+            }
+        }
+
+
+        [HttpPut]
+        [Route("/update/{id:int}")]
+        public async Task<IActionResult> Update(int id, [FromBody] Cliente dto)
         {
             try
             {
@@ -83,18 +116,34 @@ namespace CSG_ADMINPRO.API.Controllers
                     return BadRequest(ModelState);
                 }
 
-                var data = _autoMapper.Map<Cliente>(dto);
-                await _clienteService.CreateClienteAsync(data);
-                return Ok();
+                var clienteExistente = await _clienteService.GetClienteByIdAsync(id);
+
+                if(clienteExistente == null)
+                {
+                    return NotFound("Cliente no encontrado.");
+                }
+
+                var clienteActualizado = _autoMapper.Map<Cliente>(dto);
+
+                if(clienteActualizado is null)
+                {
+                    return NotFound("Cliente no encontrado.");
+                }
+
+                clienteActualizado.Id = id;
+
+                await _clienteService.UpdateClienteAsync(id, clienteActualizado);
+                return Ok("Cliente actualizado correctamente.");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                _logger.LogError(ex, "Error al crear un cliente.");
-                return StatusCode(500, "Error interno del servidor. " + ex.Message);
+
+                throw;
             }
         }
 
         [HttpDelete]
+        [Route("/delete/{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {
             try

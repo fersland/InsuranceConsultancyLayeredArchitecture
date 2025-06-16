@@ -4,7 +4,7 @@ Actualizar el model en la app
 Capa API
 	=> Controllers
 	-> appSettings.json
-	-> Mapping,cs
+	-> Mapping.cs
 	-> Program.cs
 
 Capa Aplicacion

@@ -3,6 +3,8 @@ using CSG_ADMINPRO.DOMAIN.Entities;
 using CSG_ADMINPRO.UI.Configuration;
 using Microsoft.Extensions.Options;
 using System.Text.Json;
+using Newtonsoft.Json;
+
 
 namespace CSG_ADMINPRO.UI.Services.API
 {
@@ -46,32 +48,47 @@ namespace CSG_ADMINPRO.UI.Services.API
             return data;
         }
 
-        public async Task CreateClienteAsync(ClienteDTO cliente)
+        public async Task<(bool Success, string Message)> CreateClienteAsync(ClienteDTO cliente)
         {
-            var endpoint = $"{_apiSettings.Endpoints.Clientes}/create";
+            var endpoint = "https://localhost:7261/api/cliente/create";
             var response = await _httpClient.PostAsJsonAsync(endpoint, cliente);
-            Console.WriteLine(endpoint);
 
-            if (!response.IsSuccessStatusCode)
+            var content = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
             {
-                var errorContent = await response.Content.ReadAsStringAsync();
-
-                // Intenta leer errores específicos si es un JSON
+                return (true, "Cliente creado correctamente.");
+            }
+            else
+            {
                 try
                 {
-                    var errorObj = JsonSerializer.Deserialize<Dictionary<string, object>>(errorContent);
-                    if (errorObj != null && errorObj.ContainsKey("errors"))
+                    var error = JsonConvert.DeserializeObject<dynamic>(content);
+
+                    // Manejar errores del tipo: { success: false, message: "...", errors: {...} }
+                    if (error?.message != null)
+                        return (false, (string)error.message);
+
+                    if (error?.errors != null)
                     {
-                        var errores = errorObj["errors"].ToString();
-                        throw new Exception("Errores de validación: " + errores);
+                        // Concatenar errores de ModelState
+                        var errorList = new List<string>();
+                        foreach (var item in error.errors)
+                        {
+                            foreach (var e in item.Value)
+                            {
+                                errorList.Add((string)e);
+                            }
+                        }
+                        return (false, string.Join(" ", errorList));
                     }
+
+                    return (false, "Error desconocido al crear el cliente.");
                 }
                 catch
                 {
-                    // Ignora si no es JSON válido
+                    return (false, "Error inesperado al interpretar la respuesta del servidor.");
                 }
-
-                throw new Exception($"Error al crear al cliente: {response.StatusCode}. Contenido: {errorContent}");
             }
         }
 

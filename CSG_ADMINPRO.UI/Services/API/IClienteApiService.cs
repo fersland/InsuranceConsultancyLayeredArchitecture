@@ -7,7 +7,7 @@ namespace CSG_ADMINPRO.UI.Services.API
     {
         Task<IEnumerable<Cliente>> ObtenerClienteAsync();
         Task<Cliente> BuscarClienteIdAsync(int id);
-        Task CreateClienteAsync(ClienteDTO cliente);
+        Task<(bool Success, string Message)> CreateClienteAsync(ClienteDTO cliente);
         Task UpdateClienteAsync(int id, Cliente cliente);
         Task DeleteClienteAsync(int id);
 

@@ -43,7 +43,7 @@ namespace CSG_ADMINPRO.UI.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return Json(new { success = false, message = "Los datos son invalidos" });
+                TempData["errorMessage"] = "Los datos ingresados son invalidos.";
             }
             try
             {

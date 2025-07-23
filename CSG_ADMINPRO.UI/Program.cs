@@ -2,12 +2,15 @@ using CSG_ADMINPRO.APLICATION.Implementation;
 using CSG_ADMINPRO.APLICATION.Interfaces;
 using CSG_ADMINPRO.DATA.Repository.Implementation;
 using CSG_ADMINPRO.DATA.Repository.Interfaces;
+using CSG_ADMINPRO.UI.Configuration;
 using CSG_ADMINPRO.UI.Services.API;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
+
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.Configure<ApiSettings>(builder.Configuration.GetSection("ApiSettings"));
 
 builder.Services.AddCors(options =>
 {

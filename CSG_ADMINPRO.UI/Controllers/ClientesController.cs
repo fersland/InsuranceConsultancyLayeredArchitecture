@@ -35,7 +35,7 @@ namespace CSG_ADMINPRO.UI.Controllers
 
         public IActionResult Create()
         {
-            return View();
+            return View(new ClienteDTO());
         }
 
         [HttpPost]
@@ -44,7 +44,10 @@ namespace CSG_ADMINPRO.UI.Controllers
             if (!ModelState.IsValid)
             {
                 TempData["errorMessage"] = "Los datos ingresados son invalidos.";
+                //var cliente = _mapper.Map<Cliente>(dto);
+                return View(dto);
             }
+
             try
             {
                 var dataDto = _mapper.Map<ClienteDTO>(dto);
@@ -55,7 +58,7 @@ namespace CSG_ADMINPRO.UI.Controllers
             catch (Exception ex)
             {
                 TempData["errorMessage"] = ex.Message;
-                return RedirectToAction("Index");
+                return View(dto);
             }
         }
 

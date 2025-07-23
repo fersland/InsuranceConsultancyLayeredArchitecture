@@ -48,7 +48,7 @@ namespace CSG_ADMINPRO.DATA.Repository.Implementation
             {
                 var parameters = new DynamicParameters();
                 parameters.Add("@Id", id, DbType.Int32);
-                return _connection.QueryFirst<Cliente>(_bitacora.GetByIdCliente, parameters, commandType: CommandType.StoredProcedure);
+                return _connection.QueryFirstOrDefault<Cliente>(_bitacora.GetByIdCliente, parameters, commandType: CommandType.StoredProcedure);
             }
             catch(SqlException ex)
             {

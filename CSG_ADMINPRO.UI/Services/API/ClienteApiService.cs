@@ -23,8 +23,12 @@ namespace CSG_ADMINPRO.UI.Services.API
 
         public async Task<IEnumerable<Cliente>> ObtenerClienteAsync()
         {
-            var endpoint = $"{_apiSettings.Endpoints.Clientes}/list";
+            var endpoint = new Uri(_httpClient.BaseAddress!, $"{_apiSettings.Endpoints.Clientes}/list");
+
             var response = await _httpClient.GetAsync(endpoint);
+
+            Console.WriteLine("Base URL: " + _httpClient.BaseAddress);
+            Console.WriteLine("Endpoint: " + endpoint);
             if (!response.IsSuccessStatusCode)
             {
                 return Enumerable.Empty<Cliente>();
@@ -50,7 +54,7 @@ namespace CSG_ADMINPRO.UI.Services.API
 
         public async Task<(bool Success, string Message)> CreateClienteAsync(ClienteDTO cliente)
         {
-            var endpoint = "https://localhost:7261/api/cliente/create";
+            var endpoint = new Uri(_httpClient.BaseAddress!, $"{_apiSettings.Endpoints.Clientes}/create");
             var response = await _httpClient.PostAsJsonAsync(endpoint, cliente);
 
             var content = await response.Content.ReadAsStringAsync();
@@ -65,13 +69,11 @@ namespace CSG_ADMINPRO.UI.Services.API
                 {
                     var error = JsonConvert.DeserializeObject<dynamic>(content);
 
-                    // Manejar errores del tipo: { success: false, message: "...", errors: {...} }
                     if (error?.message != null)
                         return (false, (string)error.message);
 
                     if (error?.errors != null)
                     {
-                        // Concatenar errores de ModelState
                         var errorList = new List<string>();
                         foreach (var item in error.errors)
                         {

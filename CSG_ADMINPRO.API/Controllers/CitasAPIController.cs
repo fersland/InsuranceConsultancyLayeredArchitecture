@@ -23,8 +23,7 @@ namespace CSG_ADMINPRO.API.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
-        [Route("list")]
+        [HttpGet("list")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetAllCitas()

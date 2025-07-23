@@ -1,4 +1,4 @@
-﻿@model CSG_ADMINPRO.DOMAIN.Entities.Cliente
+﻿@model CSG_ADMINPRO.APLICATION.DTOs.ClienteDTO
 
 @{
     ViewData["Title"] = "Clientes / Nuevo";
@@ -27,17 +27,17 @@
 
                         <div class="form-group">
                             <label asp-for="Cedula" class="control-label"></label>
-                            <input asp-for="Cedula" class="form-control" />
+                            <input asp-for="Cedula" class="form-control only-numbers" />
                             <span asp-validation-for="Cedula" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label asp-for="NombreCliente" class="control-label"></label>
-                            <input asp-for="NombreCliente" class="form-control" />
+                            <input asp-for="NombreCliente" class="form-control only-letters" maxlength="10" />
                             <span asp-validation-for="NombreCliente" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label asp-for="Telefono" class="control-label"></label>
-                            <input asp-for="Telefono" class="form-control" />
+                            <input asp-for="Telefono" class="form-control only-numbers" maxlength="10" />
                             <span asp-validation-for="Telefono" class="text-danger"></span>
                         </div>
                         <div class="form-group">

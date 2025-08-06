@@ -44,16 +44,24 @@ namespace CSG_ADMINPRO.UI.Controllers
             if (!ModelState.IsValid)
             {
                 TempData["errorMessage"] = "Los datos ingresados son invalidos.";
-                //var cliente = _mapper.Map<Cliente>(dto);
                 return View(dto);
             }
 
             try
             {
                 var dataDto = _mapper.Map<ClienteDTO>(dto);
-                await _service.CreateClienteAsync(dataDto);
-                TempData["successMessage"] = "Datos registrados correctamente.";
-                return RedirectToAction("Index");
+                var (success, message) = await _service.CreateClienteAsync(dataDto);
+
+                if (success)
+                {
+                    TempData["successMessage"] = message;
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    TempData["errorMessage"] = message;
+                    return View(dto);
+                }
             }
             catch (Exception ex)
             {
@@ -67,7 +75,8 @@ namespace CSG_ADMINPRO.UI.Controllers
             try
             {
                 var result = await _service.BuscarClienteIdAsync(id);
-                return View(result);
+                var clienteDto = _mapper.Map<ClienteDTO>(result);
+                return View(clienteDto);
             }
             catch (Exception ex)
             {
@@ -77,17 +86,26 @@ namespace CSG_ADMINPRO.UI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(int id, Cliente cliente)
+        public async Task<IActionResult> Edit(int id, ClienteDTO dto)
         {
             if (!ModelState.IsValid)
             {
-                return Json(new { success = false, message = "Datos invalidos" });
+                return View(dto);
             }
 
             try
             {
-                await _service.UpdateClienteAsync(id, cliente);
-                TempData["successMessage"] = "Datos actualizados correctamente.";
+                var dataDto = _mapper.Map<ClienteDTO>(dto);
+                var (success, message) = await _service.UpdateClienteAsync(dto.Id, dataDto);
+                if (success)
+                {
+                    TempData["successMessage"] = message;
+                }
+                else
+                {
+                    TempData["errorMessage"] = message;
+                }
+
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
@@ -102,8 +120,8 @@ namespace CSG_ADMINPRO.UI.Controllers
         {
             try
             {
-                await _service.DeleteClienteAsync(id);
-                return Json(new { success = true, message = "Dato eliminados correctamente." });
+                var (success, message) = await _service.DeleteClienteAsync(id);
+                return Json(new { success, message });
             }
             catch (Exception ex)
             {

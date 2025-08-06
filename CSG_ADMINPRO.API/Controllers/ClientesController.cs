@@ -150,7 +150,7 @@ namespace CSG_ADMINPRO.API.Controllers
         [ProducesResponseType(typeof(object), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(string), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Update(int id, [FromBody] Cliente dto)
+        public async Task<IActionResult> Update(int id, [FromBody] ClienteDTO dto)
         {
             try
             {

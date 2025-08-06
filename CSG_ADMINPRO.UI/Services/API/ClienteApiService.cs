@@ -16,7 +16,7 @@ namespace CSG_ADMINPRO.UI.Services.API
         public ClienteApiService(
                     IHttpClientFactory httpClientFactory,
                     IOptions<ApiSettings> apiSettings)
-        {
+        { 
             _httpClient = httpClientFactory.CreateClient("ApiClient");
             _apiSettings = apiSettings.Value;
         }
@@ -29,7 +29,7 @@ namespace CSG_ADMINPRO.UI.Services.API
 
             Console.WriteLine("Base URL: " + _httpClient.BaseAddress);
             Console.WriteLine("Endpoint: " + endpoint);
-            if (!response.IsSuccessStatusCode)
+            if (!response.IsSuccessStatusCode )
             {
                 return Enumerable.Empty<Cliente>();
             }
@@ -69,6 +69,9 @@ namespace CSG_ADMINPRO.UI.Services.API
                 {
                     var error = JsonConvert.DeserializeObject<dynamic>(content);
 
+                    if (error?.detail != null)
+                        return (false, (string)error.detail);
+
                     if (error?.message != null)
                         return (false, (string)error.message);
 
@@ -95,25 +98,79 @@ namespace CSG_ADMINPRO.UI.Services.API
         }
 
 
-        public async Task UpdateClienteAsync(int id, Cliente cliente)
+        public async Task<(bool Success, string Message)> UpdateClienteAsync(int id, ClienteDTO cliente)
         {
             var endpoint = $"{_apiSettings.Endpoints.Clientes}/update/" + id;
             var response = await _httpClient.PutAsJsonAsync(endpoint, cliente);
 
-            if (!response.IsSuccessStatusCode)
+            var content = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
             {
-                throw new Exception($"Error al actualizar al cliente: {response.StatusCode}");
+                return (true, "Cliente actualizado correctamente.");
+            }
+            else
+            {
+                try
+                {
+                    var error = JsonConvert.DeserializeObject<dynamic>(content);
+
+                    if (error?.detail != null)
+                        return (false, (string)error.detail);
+
+                    if (error?.message != null)
+                        return (false, (string)error.message);
+
+                    if (error?.errors != null)
+                    {
+                        var errorList = new List<string>();
+                        foreach (var item in error.errors)
+                        {
+                            foreach (var e in item.Value)
+                            {
+                                errorList.Add((string)e);
+                            }
+                        }
+                        return (false, string.Join(" ", errorList));
+                    }
+
+                    return (false, "Error desconocido al actualizar el cliente.");
+                }
+                catch
+                {
+                    return (false, "Error inesperado al interpretar la respuesta del servidor.");
+                }
             }
         }
 
-        public async Task DeleteClienteAsync(int id)
+        public async Task<(bool Success, string Message)> DeleteClienteAsync(int id)
         {
             var endpoint = $"{_apiSettings.Endpoints.Clientes}/delete/" + id;
             var response = await _httpClient.DeleteAsync(endpoint);
 
-            if (!response.IsSuccessStatusCode)
+            var content = await response.Content.ReadAsStringAsync();
+
+            if (response.IsSuccessStatusCode)
             {
-                throw new Exception($"Error al eliminar al cliente: {response.StatusCode}");
+                return (true, "Cliente eliminado correctamente.");
+            }
+            else
+            {
+                try
+                {
+                    var error = JsonConvert.DeserializeObject<dynamic>(content);
+
+                    if(error?.detail != null)
+                    {
+                        return (false, (string)error.detail);
+                    }
+
+                    return (false, "Error desconocido al eliminar el cliente.");
+                }
+                catch (Exception)
+                {
+                    return (false, "Error inesperado al interpretar la respuesta del servidor.");
+                }
             }
         }
     }

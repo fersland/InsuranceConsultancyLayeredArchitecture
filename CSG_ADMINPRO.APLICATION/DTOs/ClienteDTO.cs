@@ -10,6 +10,8 @@ namespace CSG_ADMINPRO.APLICATION.DTOs
 {
     public class ClienteDTO
     {
+        public int Id { get; set; }
+
         [Required]
         [StringLength(10, MinimumLength = 10, ErrorMessage = "La cédula debe tener 10 dígitos.")]
         [RegularExpression(@"^\d{10}$", ErrorMessage = "La cédula debe contener solo números.")]
@@ -22,11 +24,11 @@ namespace CSG_ADMINPRO.APLICATION.DTOs
 
         [Required]
         [RegularExpression(@"^\d{1,13}$", ErrorMessage = "El teléfono debe contener hasta 13 dígitos sin espacios.")]
-        public string Telefono { get; set; }
+        public string? Telefono { get; set; }
 
         [Required]
         [Range(18, 120, ErrorMessage = "La edad debe ser mayor o igual a 18.")]
-        public int Edad { get; set; }
+        public int? Edad { get; set; }
     }
 
 }

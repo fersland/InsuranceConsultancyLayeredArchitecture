@@ -62,22 +62,26 @@ namespace CSG_ADMINPRO.DATA.Repository.Implementation
 
         public void Insert(Cliente cliente)
         {
-            try
+            try               
             {
                 var parameters = new DynamicParameters();
                 parameters.Add("@Cedula", cliente.Cedula, DbType.String);
                 parameters.Add("@NombreCliente", cliente.NombreCliente, DbType.String);
                 parameters.Add("@Telefono", cliente.Telefono, DbType.String);
                 parameters.Add("@Edad", cliente.Edad, DbType.Int32);
+                parameters.Add("@Resultado", dbType: DbType.Int32, direction: ParameterDirection.Output);
                 _connection.Execute(_bitacora.AddCliente, parameters, commandType: CommandType.StoredProcedure);
+
+                int resultado = parameters.Get<int>("@Resultado");
+
+                if(resultado == 0)
+                {
+                    throw new Exception("Ya existe un cliente con esa cédula.");
+                }
             }
             catch (SqlException ex)
             {
-                throw new Exception("Ha ocurrido un error en la ejecucion del Store Procedure", ex);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Ha ocurrido un error", ex);
+                throw new Exception("Error en sql server: " + ex.Message, ex);
             }
         }
 
@@ -91,15 +95,19 @@ namespace CSG_ADMINPRO.DATA.Repository.Implementation
                 parameters.Add("@NombreCliente", cliente.NombreCliente, DbType.String);
                 parameters.Add("@Telefono", cliente.Telefono, DbType.String);
                 parameters.Add("@Edad", cliente.Edad, DbType.Int32);
+                parameters.Add("@Resultado", dbType: DbType.Int32, direction: ParameterDirection.Output);
                 _connection.Execute(_bitacora.EditCliente, parameters, commandType: CommandType.StoredProcedure);
+
+                int resultado = parameters.Get<int>("@Resultado");
+
+                if(resultado == 0)
+                {
+                    throw new Exception("Ya existe un cliente con esta cédula.");
+                }
             }
             catch (SqlException ex)
             {
-                throw new Exception("Ha ocurrido un error en la ejecucion del Store Procedure", ex);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Ha ocurrido un error", ex);
+                throw new Exception("Error en sql server: " + ex.Message, ex);
             }
         }
 

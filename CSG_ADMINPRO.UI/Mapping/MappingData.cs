@@ -14,7 +14,7 @@ namespace CSG_ADMINPRO.UI.Mapping
             CreateMap<UsuarioDTO, Usuario>();
             CreateMap<UsuarioPasswordDTO, Usuario>();
             CreateMap<CitaDTO, Cita>(); // Para el viewmodel
-            CreateMap<ClienteDTO, Cliente>();
+            CreateMap<Cliente, ClienteDTO>();
         }
     }
 }
